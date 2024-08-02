@@ -1,5 +1,5 @@
-create database RTO;
-use RTO;
+create database RTO1;
+use RTO1;
 create table LLR_info(LLR_ID int primary key, name varchar(30),age int,address varchar(30),
 phone varchar(15),email varchar(30),city varchar(30),LLR_date Date);
 insert into LLR_info(LLR_ID,name,age,address,phone,email,city,LLR_date) values
@@ -23,6 +23,7 @@ insert into LLR_info(LLR_ID,name,age,address,phone,email,city,LLR_date) values
 (18,'chaya',26,'kelpenagar',8660058829,'chaya@gmail.com','delhi','2024-08-26'),
 (19,'manju',29,'hangasi',8660058830,'manju@gmail.com','dubai','2024-08-25'),
 (20,'jay',50,'rani',8660058831,'jay@gmail.com','wayanad','2024-08-23');
+select*from  LLR_info;
 
 create table LLR_TEST_INFO(TEST_ID INT primary key,test_date DATE,score INT,result VARCHAR(50),test_center VARCHAR(30),
 tester_name VARCHAR(30),vehicle_type VARCHAR(50),LLR_ID int, FOREIGN KEY (LLR_ID) REFERENCES LLR_INFO(LLR_ID)); 
@@ -49,7 +50,8 @@ insert into LLR_TEST_INFO(TEST_ID,test_date,score,result,test_center,tester_name
 (118, '2024-08-18', 87, 'Pass', 'CenterR', 'prema', 'Truck', 18),
 (119, '2024-08-19', 84, 'Pass', 'CenterS', 'kiran', 'Car', 19),
 (120, '2024-08-20', 80, 'Pass', 'CenterT', 'ashwini', 'Bike', 20);
- 
+
+ select *from LLR_TEST_INFO;
  create table driving_licence_info( DL_ID INT PRIMARY KEY,LLR_ID INT,TEST_ID INT,issue_date DATE,expiry_date DATE,
  license_number VARCHAR(20), holder_name VARCHAR(30), address VARCHAR(30),vehicle_class VARCHAR(50), status VARCHAR(20),
  FOREIGN KEY (LLR_ID) REFERENCES LLR_INFO(LLR_ID), FOREIGN KEY (TEST_ID) REFERENCES LLR_TEST_INFO(TEST_ID));
@@ -76,7 +78,7 @@ insert into driving_licence_info(DL_ID,LLR_ID,issue_date,expiry_date,license_num
 (19, 19, '2024-08-19', '2034-08-19', 'DL1234567808', 'Manju Patel', 'Hangasi, Dubai', 'Bike', 'Active'),
 (20, 20, '2024-08-20', '2034-08-20', 'DL1234567809', 'Jay Kumar', 'Rani, Wayanad', 'Car', 'Active');
 
- 
+ select *from driving_licence_info;
 create table driving_licence_info_test_info(DL_ID INT PRIMARY KEY,TEST_ID INT,LLR_ID INT, test_date DATE,                          
 test_score INT, result VARCHAR(30), test_center VARCHAR(30),officer_name VARCHAR(30), vehicle_type VARCHAR(30),issue_date DATE,                         
 FOREIGN KEY (TEST_ID) REFERENCES LLR_TEST_INFO(TEST_ID), FOREIGN KEY (LLR_ID) REFERENCES LLR_INFO(LLR_ID));
@@ -101,21 +103,11 @@ FOREIGN KEY (TEST_ID) REFERENCES LLR_TEST_INFO(TEST_ID), FOREIGN KEY (LLR_ID) RE
 (17, 117, 17, '2024-08-17', 79, 'Fail', 'CenterQ', 'Raj Singh', 'Car', '2024-08-17'),
 (18, 118, 18, '2024-08-18', 87, 'Pass', 'CenterR', 'Chaya Rao', 'Truck', '2024-08-18'),
 (19, 119, 19, '2024-08-19', 84, 'Pass', 'CenterS', 'Manju Patel', 'Car', '2024-08-19'),
-(20, 120, 20, '2024-08-20', 80, 'Pass', 'CenterT', 'Jay Kumar', 'Bike', '2024-08-20')
-ON DUPLICATE KEY UPDATE
-    test_date = VALUES(test_date),
-    test_score = VALUES(test_score),
-    result = VALUES(result),
-    test_center = VALUES(test_center),
-    officer_name = VALUES(officer_name),
-    vehicle_type = VALUES(vehicle_type),
-    issue_date = VALUES(issue_date);
+(20, 120, 20, '2024-08-20', 80, 'Pass', 'CenterT', 'Jay Kumar', 'Bike', '2024-08-20');
 
+select* from driving_licence_info_test_info; 
+insert into driving_licence_info_test_info(DL_ID,TEST_ID) values(14,114) on duplicate key update test_center="centerm";
 
-
-
-
-
-
+replace into driving_licence_info_test_info values(21, 119, 19, '2024-08-21', 80, 'fail', 'Centery', 'vKumar', 'lary', '2024-08-22');
 
 
