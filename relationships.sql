@@ -151,26 +151,139 @@ VALUES
 
 select * from supplier;
 
-CREATE TABLE Product (
-    ProductID INT PRIMARY KEY AUTO_INCREMENT,
-    ProductName VARCHAR(255),
-    SupplierID INT,
-    Category VARCHAR(100),
-    QuantityPerUnit VARCHAR(50),
-    UnitPrice DECIMAL(10, 2),
-    UnitsInStock INT,
-    UnitsOnOrder INT,
-    ReorderLevel INT,
-    Discontinued BOOLEAN,
-    FOREIGN KEY (SupplierID) REFERENCES Supplier(SupplierID)
-);
+CREATE TABLE Product (ProductID INT PRIMARY KEY ,ProductName VARCHAR(255),SupplierID INT,Category VARCHAR(100),QuantityPerUnit VARCHAR(50),
+Price DECIMAL(10, 2),Stock INT,UnitsOrder INT,ReorderLevel INT,Discontinued BOOLEAN,FOREIGN KEY (SupplierID) REFERENCES customer(customerID));
 
+INSERT INTO Product (ProductID, ProductName, SupplierID, Category, QuantityPerUnit, Price, Stock, UnitsOrder, ReorderLevel, Discontinued)
+VALUES 
+(1, 'Smartphone XYZ', 1, 'Electronics', '1 unit', 699.99, 150, 20, 10, FALSE),
+(2, '4K TV', 2, 'Electronics', '1 unit', 1199.99, 80, 10, 5, FALSE),
+(3, 'Wireless Headphones', 3, 'Electronics', '1 pair', 149.99, 200, 30, 15, FALSE),
+(4, 'Gaming Laptop', 4, 'Electronics', '1 unit', 1599.99, 60, 5, 3, FALSE),
+(5, 'Winter Jacket', 5, 'Apparel', '1 unit', 89.99, 120, 25, 10, FALSE),
+(6, 'Running Shoes', 6, 'Footwear', '1 pair', 79.99, 180, 40, 20, FALSE),
+(7, 'Cookware Set', 7, 'Home & Kitchen', '5 pieces', 249.99, 90, 15, 8, FALSE),
+(8, 'Coffee Maker', 8, 'Home & Kitchen', '1 unit', 99.99, 140, 25, 12, FALSE),
+(9, 'Bookshelf', 9, 'Furniture', '1 unit', 119.99, 70, 10, 5, FALSE),
+(10, 'Office Chair', 10, 'Furniture', '1 unit', 199.99, 50, 8, 4, FALSE),
+(11, 'Fitness Tracker', 11, 'Electronics', '1 unit', 129.99, 100, 20, 10, FALSE),
+(12, 'Gaming Console', 12, 'Electronics', '1 unit', 499.99, 90, 15, 7, FALSE),
+(13, 'Yoga Mat', 13, 'Fitness', '1 unit', 29.99, 200, 50, 25, FALSE),
+(14, 'Art Supplies Kit', 14, 'Arts & Crafts', '1 kit', 74.99, 110, 18, 9, FALSE),
+(15, 'Electric Guitar', 15, 'Musical Instruments', '1 unit', 499.99, 60, 12, 6, FALSE),
+(16, 'Garden Tools Set', 16, 'Garden', '1 set', 89.99, 85, 20, 10, FALSE),
+(17, 'Luxury Watch', 17, 'Accessories', '1 unit', 899.99, 40, 8, 4, FALSE),
+(18, 'Travel Backpack', 18, 'Luggage', '1 unit', 89.99, 150, 25, 12, FALSE),
+(19, 'Leather Sofa', 19, 'Furniture', '1 unit', 1399.99, 30, 5, 3, FALSE),
+(20, 'Craft Beer Set', 20, 'Beverages', '6 bottles', 49.99, 200, 40, 20, FALSE);
+select * from product;
 
-CREATE TABLE Students (StudentID INT PRIMARY KEY,FirstName VARCHAR(100),LastName VARCHAR(100),DateOfBirth DATE,Email VARCHAR(100) UNIQUE,
-    PhoneNumber VARCHAR(20),EnrollmentDate DATE,Major VARCHAR(100),GPA DECIMAL(3, 2),Status VARCHAR(50));
-drop database aug3;
+CREATE TABLE SalesOrder (SalesOrderID INT PRIMARY KEY,OrderDate DATE,CustomerID INT,ProductID INT,QuantityOrdered INT,UnitPrice DECIMAL(10, 2),
+Discount DECIMAL(5, 2),TotalAmount DECIMAL(10, 2),ShippingAddress VARCHAR(255),OrderStatus VARCHAR(50),
+FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID),FOREIGN KEY (ProductID) REFERENCES Product(ProductID));
 
+INSERT INTO SalesOrder (SalesOrderID, OrderDate, CustomerID, ProductID, QuantityOrdered, UnitPrice, Discount, TotalAmount, ShippingAddress, OrderStatus)
+VALUES
+(1, '2024-08-01', 1, 3, 2, 149.99, 0.10, 269.98, '123 Elm St, Springfield, IL, 62701', 'Shipped'),
+(2, '2024-08-02', 2, 5, 1, 89.99, 0.00, 89.99, '456 Maple Ave, Metropolis, NY, 10001', 'Delivered'),
+(3, '2024-08-03', 3, 7, 3, 59.99, 0.05, 170.97, '789 Pine St, Gotham, NY, 10001', 'Processing'),
+(4, '2024-08-04', 4, 2, 1, 1199.99, 0.15, 1019.99, '101 Birch Rd, Star City, CA, 90001', 'Cancelled'),
+(5, '2024-08-05', 5, 8, 4, 99.99, 0.00, 399.96, '202 Cedar Ln, Central City, CO, 80001', 'Shipped'),
+(6, '2024-08-06', 6, 1, 2, 699.99, 0.07, 1309.98, '303 Spruce St, Coast City, FL, 33101', 'Delivered'),
+(7, '2024-08-07', 7, 4, 5, 79.99, 0.10, 359.95, '505 Oak Dr, Emerald City, WA, 98001', 'Processing'),
+(8, '2024-08-08', 8, 6, 1, 249.99, 0.00, 249.99, '606 Elm St, Sunnydale, CA, 90001', 'Shipped'),
+(9, '2024-08-09', 9, 9, 3, 310.00, 0.05, 885.00, '707 Maple Ave, Gotham, NY, 10001', 'Delivered'),
+(10, '2024-08-10', 10, 10, 2, 199.99, 0.00, 399.98, '808 Birch St, Metropolis, NY, 10001', 'Processing'),
+(11, '2024-08-11', 1, 12, 1, 155.50, 0.05, 147.72, '123 Elm St, Springfield, IL, 62701', 'Shipped'),
+(12, '2024-08-12', 2, 13, 2, 275.25, 0.10, 495.40, '456 Maple Ave, Metropolis, NY, 10001', 'Delivered'),
+(13, '2024-08-13', 3, 14, 3, 89.50, 0.00, 268.50, '789 Pine St, Gotham, NY, 10001', 'Processing'),
+(14, '2024-08-14', 4, 15, 4, 340.60, 0.00, 1362.40, '101 Birch Rd, Star City, CA, 90001', 'Shipped'),
+(15, '2024-08-15', 5, 16, 2, 210.45, 0.05, 400.86, '202 Cedar Ln, Central City, CO, 80001', 'Delivered'),
+(16, '2024-08-16', 6, 17, 1, 199.95, 0.00, 199.95, '303 Spruce St, Coast City, FL, 33101', 'Processing'),
+(17, '2024-08-17', 7, 18, 3, 120.20, 0.10, 324.54, '505 Oak Dr, Emerald City, WA, 98001', 'Shipped'),
+(18, '2024-08-18', 8, 19, 2, 345.00, 0.00, 690.00, '606 Elm St, Sunnydale, CA, 90001', 'Delivered'),
+(19, '2024-08-19', 9, 20, 4, 89.75, 0.05, 341.80, '707 Maple Ave, Gotham, NY, 10001', 'Processing'),
+(20, '2024-08-20', 10, 1, 1, 699.99, 0.00, 699.99, '808 Birch St, Metropolis, NY, 10001', 'Shipped');
+select *from salesorder;
 
+CREATE TABLE Students (StudentID INT PRIMARY KEY,FirstName VARCHAR(50),LastName VARCHAR(50),Email VARCHAR(100),Phone VARCHAR(15),
+DateOfBirth DATE,EnrollmentDate DATE,Major VARCHAR(100),GPA DECIMAL(3, 2),Address VARCHAR(255));
+
+INSERT INTO Students (StudentID, FirstName, LastName, Email, Phone, DateOfBirth, EnrollmentDate, Major, GPA, Address) VALUES
+(1, 'Aarav', 'Patel', 'aarav.patel@example.com', '987-6543', '2001-04-15', '2020-09-01', 'Computer Science', 3.75, '1/2, MG Road, Ahmedabad, Gujarat'),
+(2, 'Isha', 'Sharma', 'isha.sharma@example.com', '987-6544', '2000-11-23', '2019-09-01', 'Mathematics', 3.60, '12, Park Street, Bangalore, Karnataka'),
+(3, 'Vivaan', 'Singh', 'vivaan.singh@example.com', '987-6545', '2002-02-10', '2021-01-15', 'Biology', 3.90, '45, Sector 12, Noida, Uttar Pradesh'),
+(4, 'Ananya', 'Mehta', 'ananya.mehta@example.com', '987-6546', '1999-06-30', '2018-09-01', 'Physics', 3.45, '67, Mandi House, Delhi'),
+(5, 'Aryan', 'Reddy', 'aryan.reddy@example.com', '987-6547', '2001-12-05', '2020-09-01', 'Chemistry', 3.80, '89, Banjara Hills, Hyderabad, Telangana'),
+(6, 'Saanvi', 'Kumar', 'saanvi.kumar@example.com', '987-6548', '2000-09-17', '2019-09-01', 'Engineering', 3.70, '101, Vashi, Navi Mumbai, Maharashtra'),
+(7, 'Aditya', 'Nair', 'aditya.nair@example.com', '987-6549', '2002-01-25', '2021-01-15', 'English', 3.85, '32, Pali Hill, Mumbai, Maharashtra'),
+(8, 'Diya', 'Joshi', 'diya.joshi@example.com', '987-6550', '1999-07-04', '2018-09-01', 'History', 3.50, '54, B-Block, Kolkata, West Bengal'),
+(9, 'Kartik', 'Gupta', 'kartik.gupta@example.com', '987-6551', '2000-03-22', '2019-09-01', 'Economics', 3.65, '76, Arera Colony, Bhopal, Madhya Pradesh'),
+(10, 'Mira', 'Singh', 'mira.singh@example.com', '987-6552', '2002-05-14', '2021-01-15', 'Political Science', 3.55, '98, Anand Vihar, Delhi'),
+(11, 'Rohan', 'Chopra', 'rohan.chopra@example.com', '987-6553', '2001-08-11', '2020-09-01', 'Art', 3.90, '120, Green Park, Delhi'),
+(12, 'Naina', 'Sethi', 'naina.sethi@example.com', '987-6554', '2000-12-17', '2019-09-01', 'Music', 3.70, '141, Jayanagar, Bangalore, Karnataka'),
+(13, 'Arjun', 'Kaur', 'arjun.kaur@example.com', '987-6555', '2002-04-29', '2021-01-15', 'Theater', 3.85, '162, Golf Course Road, Gurgaon, Haryana'),
+(14, 'Priya', 'Shukla', 'priya.shukla@example.com', '987-6556', '1999-09-15', '2018-09-01', 'Philosophy', 3.40, '183, Saket, Delhi'),
+(15, 'Vihaan', 'Agarwal', 'vihaan.agarwal@example.com', '987-6557', '2001-01-12', '2020-09-01', 'Psychology', 3.75, '204, Rajouri Garden, Delhi'),
+(16, 'Siddharth', 'Bhat', 'siddharth.bhat@example.com', '987-6558', '2000-10-09', '2019-09-01', 'Sociology', 3.60, '225, Nariman Point, Mumbai, Maharashtra'),
+(17, 'Shruti', 'Rao', 'shruti.rao@example.com', '987-6559', '2002-06-23', '2021-01-15', 'International Relations', 3.80, '246, Hitech City, Hyderabad, Telangana'),
+(18, 'Ravi', 'Malik', 'ravi.malik@example.com', '987-6560', '2001-03-30', '2020-09-01', 'Statistics', 3.65, '267, Vasant Vihar, Delhi'),
+(19, 'Madhuri', 'Khan', 'madhuri.khan@example.com', '987-6561', '2000-11-07', '2019-09-01', 'Environmental Science', 3.55, '289, Peddar Road, Mumbai, Maharashtra'),
+(20, 'Karan', 'Puri', 'karan.puri@example.com', '987-6562', '2002-08-18', '2021-01-15', 'Public Health', 3.90, '310, Model Town, Delhi');
+
+select *from students;
+
+CREATE TABLE StudentCourses (StudentID INT,CourseID INT, EnrollmentDate DATE, Grade CHAR(2), Status VARCHAR(20), CreditsEarned INT,                         
+Semester VARCHAR(10),Year INT, Comments TEXT,PRIMARY KEY (StudentID), FOREIGN KEY (StudentID) REFERENCES Students(StudentID));
+
+INSERT INTO StudentCourses (StudentID, CourseID, EnrollmentDate, Grade, Status, CreditsEarned, Semester, Year, Comments) VALUES
+(1, 101, '2023-01-10', 'A', 'Completed', 4, 'Spring', 2023, 'Outstanding performance in the course.'),
+(2, 102, '2023-01-15', 'B+', 'Completed', 3, 'Spring', 2023, 'Good progress, but missed a few assignments.'),
+(3, 103, '2023-02-01', 'A-', 'In Progress', 4, 'Winter', 2023, 'Strong participation and good grasp of the material.'),
+(4, 104, '2023-02-20', 'C', 'Dropped', 0, 'Spring', 2023, 'Student decided to withdraw from the course.'),
+(5, 105, '2023-03-05', 'B', 'Completed', 3, 'Fall', 2023, 'Satisfactory performance, needs improvement in exams.'),
+(6, 106, '2023-03-15', 'A+', 'Completed', 4, 'Fall', 2023, 'Exceptional work and engagement.'),
+(7, 107, '2023-04-01', 'B-', 'In Progress', 3, 'Spring', 2023, 'Requires additional practice and focus on assignments.'),
+(8, 108, '2023-04-20', 'A', 'Completed', 4, 'Winter', 2023, 'Very thorough understanding and high-quality work.'),
+(9, 109, '2023-05-01', 'B+', 'Completed', 3, 'Summer', 2023, 'Good effort, could benefit from more revision.'),
+(10, 110, '2023-05-15', 'C+', 'In Progress', 3, 'Summer', 2023, 'Struggling with some concepts, additional support needed.'),
+(11, 111, '2023-01-10', 'A', 'Completed', 4, 'Spring', 2023, 'Consistent high performance throughout the semester.'),
+(12, 112, '2023-01-15', 'B', 'Completed', 3, 'Spring', 2023, 'Good understanding but missed a few deadlines.'),
+(13, 113, '2023-02-01', 'A-', 'In Progress', 4, 'Winter', 2023, 'Strong contributions in class discussions and projects.'),
+(14, 114, '2023-02-20', 'C+', 'Dropped', 0, 'Spring', 2023, 'Decided to drop out due to personal reasons.'),
+(15, 115, '2023-03-05', 'B', 'Completed', 3, 'Fall', 2023, 'Solid performance with room for improvement in tests.'),
+(16, 116, '2023-03-15', 'A+', 'Completed', 4, 'Fall', 2023, 'Exceptional academic work and participation.'),
+(17, 117, '2023-04-01', 'B-', 'In Progress', 3, 'Spring', 2023, 'Needs to improve homework submission and exam scores.'),
+(18, 118, '2023-04-20', 'A', 'Completed', 4, 'Winter', 2023, 'Excellent project work and exam results.'),
+(19, 119, '2023-05-01', 'C', 'Completed', 3, 'Summer', 2023, 'Met basic course requirements but needs improvement.'),
+(20, 120, '2023-05-15', 'B+', 'In Progress', 3, 'Summer', 2023, 'Good progress with some areas needing more focus.');
+
+select * from studentCourses;
+UPDATE StudentCourses
+SET CreditsEarned = CASE
+    WHEN Grade = 'A+' THEN CreditsEarned + 1
+    ELSE CreditsEarned
+END;
+
+SELECT Email, COUNT(*) AS NumberOfStudents
+FROM Students
+GROUP BY Email;
+
+SELECT Semester, AVG(CreditsEarned) AS AverageCredits
+FROM StudentCourses
+GROUP BY Semester;
+
+SELECT CourseID, MAX(CreditsEarned) AS MaxCredits
+FROM StudentCourses
+GROUP BY CourseID;
+
+SELECT Status, COUNT(*) AS NumberOfStudents
+FROM StudentCourses
+GROUP BY Status
+HAVING COUNT(*) > 5;
+
+SELECT * FROM customer
+ORDER BY firstname ;
 
 
 
